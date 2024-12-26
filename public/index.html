@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inengiye's Book directory app</title>
+</head>
+
+<body>
+    <header>
+        <h1>Books Directory App</h1>
+    </header>
+
+    <section id="Book List" class="book-list-container">
+        <!--Book Cards-->
+        <div class="book-card" data-id="676c1aecc27fbfeeab4eeb86">
+            <h3 class="book-title">To kill a Mockingbird</h3>
+            <p class="book-author">Harper Lee</p>
+            <p class="book-genre">Fiction</p>
+            <p class="book-publication-year">1960</p>
+            <p class="book-isbn">9780061120084</p>
+            <div class="action-buttons">
+                <button class="delete-button">Delete</button>
+            </div>
+        </div>
+
+        <div class="book-card" data-id="676c1aecc27fbfeeab4eeb87">
+            <h3 class="book-title">1984</h3>
+            <p class="book-author">George Orwell</p>
+            <p class="book-genre">Dystopian</p>
+            <p class="book-publication-year">1949</p>
+            <p class="book-isbn">9780451524935</p>
+            <div class="action-buttons">
+                <button class="delete-button">Delete</button>
+            </div>
+        </div>
+
+        <div class="book-card" data-id="676c1aecc27fbfeeab4eeb89">
+            <h3 class="book-title">Pride and Prejudice</h3>
+            <p class="book-author">Jane Austen</p>
+            <p class="book-genre">Romance</p>
+            <p class="book-publication-year">1813</p>
+            <p class="book-isbn">9781503290563</p>
+            <div class="action-buttons">
+                <button class="delete-button">Delete</button>
+            </div>
+        </div>
+
+        <div class="book-card" data-id="676c1aecc27fbfeeab4eeb8a">
+            <h3 class="book-title">The Catcher in the Rye</h3>
+            <p class="book-author">J.D. Salinger</p>
+            <p class="book-genre">Fiction</p>
+            <p class="book-publication-year">1951</p>
+            <p class="book-isbn">9780316769488</p>
+            <div class="action-buttons">
+                <button class="delete-button">Delete</button>
+            </div>
+        </div>
+
+        <div class="book-card" data-id="676c1aecc27fbfeeab4eeb88">
+            <h3 class="book-title">The Great Gatsby</h3>
+            <p class="book-author">F. Scott Fitzgerald</p>
+            <p class="book-genre">Classic</p>
+            <p class="book-publication-year">1925</p>
+            <p class="book-isbn">9780743273565</p>
+            <div class="action-buttons">
+                <button class="delete-button">Delete</button>
+            </div>
+        </div>
+    </section>
+
+    <section id="Book-Add" class="Book-Add">
+        <div class="Book-Add-form">
+            <h1>ADD A BOOK</h1>
+            <form id="contact-form">
+                <fieldset>
+                    <legend>Book</legend>
+                    <label>Title</label><br>
+                    <input type="text" name="title" id="name" required>
+                    <br>
+                    <label>Email</label><br>
+                    <input type="email" name="email" id="email" required>
+                    <br>
+                    <label>Message</label><br>
+                    <div class="message-container">
+                        <textarea name="message" id="message" required></textarea>
+                    </div>
+                </fieldset>
+                <br>
+                <input type="submit" value="Submit">
+            </form>
+        </div>
+
+    </section>
+</body>
+
+</html>
