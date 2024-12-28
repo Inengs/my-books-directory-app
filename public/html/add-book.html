@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Book</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+    <section id="Book-Add" class="Book-Add">
+        <div class="Book-Add-form">
+            <h1>ADD A NEW BOOK</h1>
+            <form id="contact-form" action="/books" method="POST">
+                <fieldset>
+                    <legend>Book</legend>
+                    <label>Title:</label><br>
+                    <input type="text" name="title" id="title" required>
+                    <br>
+                    <label>Author:</label><br>
+                    <input type="text" name="author" id="author" required>
+                    <br>
+                    <label>Genre:</label><br>
+                    <input type="text" name="genre" id="genre" required>
+                    <br>
+                    <label>Publication Year:</label><br>
+                    <input type="number" name="publicationYear" id="publicationYear" required>
+                    <br>
+                    <label>ISBN:</label><br>
+                    <input type="text" name="isbn" id="isbn" required>
+                    <br>
+                </fieldset>
+                <br>
+                <button id="Submit">Add Book</button>
+            </form>
+        </div>
+
+        <h3>Book Details</h3>
+        <div id="bookDetails"></div>
+
+    </section>
+
+    <script src="/js/add-book.js"></script>
+</body>
+
+</html>

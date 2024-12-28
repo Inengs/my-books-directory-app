@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get a book</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+    <section id="Book-get" class="Book-get">
+        <div class="Book-Get-form">
+            <h1>GET BOOK BY ID</h1>
+            <form id="book-add-form" action="/books" method="GET">
+                <fieldset>
+                    <legend>Book</legend>
+                    <label>Book-id:</label><br>
+                    <input type="text" name="book-id" id="book-id" placeholder="Enter book ID" required>
+                    <br>
+                </fieldset>
+                <br>
+                <button id="Submit">Get Book</button>
+            </form>
+        </div>
+
+        <h3>Book Details</h3>
+        <div id="bookDetails"></div>
+
+    </section>
+
+    <script src="/js/get-book.js"></script>
+</body>
+
+</html>

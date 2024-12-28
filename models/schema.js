@@ -4,7 +4,7 @@ const bookSchema = new mongoose.Schema({
     author: { type: String, required: true },
     genre: { type: String, required: true },
     publicationYear: { type: Number, required: true },
-    isbn: { type: String }
+    isbn: { type: String, required: true }
 })
 
 // Create the model

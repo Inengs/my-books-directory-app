@@ -17,10 +17,10 @@ router.get('/', async (req, res) => {
 router.post('/', async (req, res) => {
     try {
         const newBook = new Book(req.body);
-        const savedBook = await newBook.save();
-        res.status(201).json(savedBook)
+        const savedBook = await newBook.save(); //save the new book to the database
+        res.status(201).json(savedBook) // respond with a success message
     } catch (err) {
-        res.status(400).json({ error: " failed to add the book" })
+        res.status(400).json({ error: " failed to add the book" }) // respond with an error message
     }
 })
 
