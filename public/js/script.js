@@ -10,20 +10,35 @@ async function fetchBooks(page = 1) {
         if (response.ok) {
             const data = await response.json();
             const { books, totalPages } = data;
-            booksList.innerHTML = '';
+            booksList.innerHTML = ''; // Clear the books list
             books.forEach((book) => {
                 const bookItem = document.createElement('div');
+                bookItem.classList.add('book-card'); // Add class to each book item
+                bookItem.setAttribute('data-id', book._id); // Set a unique data-id for each book
+
                 bookItem.innerHTML = `
                     <h3>${book.title}</h3>
                     <p>Author: ${book.author}</p>
-                    <p>${book.genre}</p>
-                    <p>${book.publicationYear}</p>
-                    <p>${book.isbn}</p>
+                    <p>Genre: ${book.genre}</p>
+                    <p>Publication Year: ${book.publicationYear}</p>
+                    <p>ISBN: ${book.isbn}</p>
+                    <button class="delete-button" data-id="${book._id}">Delete</button>
                 `;
+
+                // append book item to the list
                 booksList.appendChild(bookItem);
             });
+
             // Update pagination controls
             updatePaginationControls(totalPages);
+
+            const deleteButtons = document.querySelectorAll('.delete-button');
+            deleteButtons.ForEach((button) => {
+                button.addEventListener('click', (e) => {
+                    const bookId = e.target.getAttribute('data-id');
+                    deleteBook(bookId, e.target.closest('.book-card')); // Delete the book from the UI
+                })
+            })
         }
     } catch (error) {
         console.error('Error fetching books:', error);
@@ -44,21 +59,26 @@ function updatePaginationControls(totalPages) {
     }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    fetchBooks(currentPage);
-});
 
-async function deleteBook(bookId) {
+
+async function deleteBook(bookId, bookElement) {
     try {
         const response = await fetch(`/books/${bookId}`, {
             method: 'DELETE'
         })
         if (response.ok) {
+            bookElement.remove();
             alert('Book deleted successfully')
+        } else {
+            alert('Failed to delete book')
         }
-        document.querySelector(`.book-card[data-id="${bookid}]`)
+        document.querySelector(`.book-card[data-id="${bookId}"]`)
 
     } catch (error) {
         console.error('Error deleting book:', error);
     }
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    fetchBooks(currentPage);
+});

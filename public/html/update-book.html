@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Book</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+    <section id="Book-Update" class="Book-Update">
+        <div class="Book-Update-form">
+            <h1>UPDATE BOOK DETAILS</h1>
+            <form id="update-book-form" method="PUT">
+                <fieldset>
+                    <legend>Book</legend>
+                    <label for="book-id">Enter Book ID:</label><br>
+                    <input type="text" id="book-id" name="book-id" required>
+                    <br>
+                    <label for="title">Title:</label><br>
+                    <input type="text" name="title" id="title" required>
+                    <br>
+                    <label for="author">Author:</label><br>
+                    <input type="text" name="author" id="author" required>
+                    <br>
+                    <label for="genre">Genre:</label><br>
+                    <input type="text" name="genre" id="genre" required>
+                    <br>
+                    <label for="publicationYear">Publication Year:</label><br>
+                    <input type="number" name="publicationYear" id="publicationYear" required>
+                    <br>
+                    <label label for="isbn">ISBN:</label><br>
+                    <input type="text" name="isbn" id="isbn" required>
+                    <br>
+                </fieldset>
+                <br>
+                <button id="submit">Update Book</button>
+            </form>
+        </div>
+
+        <h3>Book Details</h3>
+        <div id="bookDetails"></div>
+
+    </section>
+
+    <script src="/js/update-book.js"></script>
+</body>
+
+</html>

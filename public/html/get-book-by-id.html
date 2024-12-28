@@ -12,7 +12,7 @@
     <section id="Book-get" class="Book-get">
         <div class="Book-Get-form">
             <h1>GET BOOK BY ID</h1>
-            <form id="book-add-form" action="/books" method="GET">
+            <form id="get-book-form" action="/books" method="GET">
                 <fieldset>
                     <legend>Book</legend>
                     <label>Book-id:</label><br>
@@ -26,6 +26,21 @@
 
         <h3>Book Details</h3>
         <div id="bookDetails"></div>
+        <label>Title:</label><br>
+        <input type="text" id="title" readonly><br>
+
+        <label>Author:</label><br>
+        <input type="text" id="author" readonly><br>
+
+        <label>Genre:</label><br>
+        <input type="text" id="genre" readonly><br>
+
+        <label>Publication Year:</label><br>
+        <input type="text" id="publicationYear" readonly><br>
+
+        <label>ISBN:</label><br>
+        <input type="text" id="isbn" readonly><br>
+        </div>
 
     </section>
 
