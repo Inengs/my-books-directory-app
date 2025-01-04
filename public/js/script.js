@@ -33,12 +33,14 @@ async function fetchBooks(page = 1) {
             updatePaginationControls(totalPages);
 
             const deleteButtons = document.querySelectorAll('.delete-button');
-            deleteButtons.ForEach((button) => {
+            deleteButtons.forEach((button) => {
                 button.addEventListener('click', (e) => {
                     const bookId = e.target.getAttribute('data-id');
                     deleteBook(bookId, e.target.closest('.book-card')); // Delete the book from the UI
                 })
             })
+        } else {
+            console.error('Failed to fetch books. Server returned:', response.status);
         }
     } catch (error) {
         console.error('Error fetching books:', error);
@@ -51,6 +53,10 @@ function updatePaginationControls(totalPages) {
     for (let i = 1; i <= totalPages; i++) {
         const pageItem = document.createElement('button');
         pageItem.innerText = i;
+        pageItem.classList.add('pagination-button');
+        if (i === currentPage) {
+            pageItem.classList.add('active')
+        }
         pageItem.addEventListener('click', () => {
             currentPage = i;
             fetchBooks(i);
