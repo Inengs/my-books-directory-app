@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const Book = require('../models/schema')
+const Book = require('../models/schema').Book;
 
 
 // Add a new book

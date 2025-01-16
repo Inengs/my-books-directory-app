@@ -12,7 +12,8 @@
     <section id="Book-Update" class="Book-Update">
         <div class="Book-Update-form">
             <h1>UPDATE BOOK DETAILS</h1>
-            <form id="update-book-form" method="PUT">
+            <form id="update-book-form" method="post" action="/update-book">
+                <input type="hidden" name="_method" value="PUT">
                 <fieldset>
                     <legend>Book</legend>
                     <label for="book-id">Enter Book ID:</label><br>
@@ -30,12 +31,12 @@
                     <label for="publicationYear">Publication Year:</label><br>
                     <input type="number" name="publicationYear" id="publicationYear" required>
                     <br>
-                    <label label for="isbn">ISBN:</label><br>
+                    <label for="isbn">ISBN:</label><br>
                     <input type="text" name="isbn" id="isbn" required>
                     <br>
                 </fieldset>
                 <br>
-                <button type = "submit" id="submit">Update Book</button>
+                <button type="submit" id="submit">Update Book</button>
             </form>
         </div>
 

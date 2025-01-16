@@ -10,6 +10,43 @@ body {
     padding: 20px;
 }
 
+nav {
+    background-color: #333;
+    padding: 10px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    padding: 0 15px;
+}
+
+.nav-list {
+    list-style: none;
+    /* Remove default list bullets */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    /* Use Flexbox for horizontal layout */
+}
+
+.nav-link {
+    display: block;
+    /* Make links occupy full width of their container */
+    padding: 10px 20px;
+    /* Add some padding for better clickability */
+    text-decoration: none;
+    /* Remove default underline */
+    color: #333;
+    /* Set text color */
+}
+
+.nav-link:hover {
+    background-color: #f0f0f0;
+    /* Change background color on hover */
+}
+
+
 .container {
     max-width: 800px;
     margin: 0 auto;

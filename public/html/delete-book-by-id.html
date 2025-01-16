@@ -12,7 +12,8 @@
     <section id="Book-delete" class="Book-delete">
         <div class="Book-delete-form">
             <h1>DELETE BOOK BY ID</h1>
-            <form id="delete-book-form" action="/books" method="DELETE">
+            <form id="delete-book-form" action="/books" method="post">
+                <input type="hidden" name="_method" value="DELETE">
                 <fieldset>
                     <legend>Book</legend>
                     <label>Book-id:</label><br>
