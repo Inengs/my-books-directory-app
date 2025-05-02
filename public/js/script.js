@@ -3,10 +3,23 @@ const limit = 20; // Number of books per page
 const booksList = document.getElementById('books-list');
 const paginationControls = document.getElementById('pagination-controls');
 
-
 async function fetchBooks(page = 1) {
+    const token = localStorage.getItem('authToken');
+    if (!token) {
+        alert('Please log in to view books');
+        window.location.href = '/';
+        return;
+    }
+
     try {
-        const response = await fetch(`/books?page=${page}&limit=${limit}`)
+        const response = await fetch(`/books?page=${page}&limit=${limit}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        });
+
         if (response.ok) {
             const data = await response.json();
             const { books, totalPages } = data;
@@ -37,10 +50,16 @@ async function fetchBooks(page = 1) {
                 button.addEventListener('click', (e) => {
                     const bookId = e.target.getAttribute('data-id');
                     deleteBook(bookId, e.target.closest('.book-card')); // Delete the book from the UI
-                })
-            })
+                });
+            });
         } else {
-            console.error('Failed to fetch books. Server returned:', response.status);
+            if (response.status === 401 || response.status === 403) {
+                alert('Session expired. Please log in again.');
+                localStorage.removeItem('authToken');
+                window.location.href = '/';
+            } else {
+                console.error('Failed to fetch books. Server returned:', response.status);
+            }
         }
     } catch (error) {
         console.error('Error fetching books:', error);
@@ -55,7 +74,7 @@ function updatePaginationControls(totalPages) {
         pageItem.innerText = i;
         pageItem.classList.add('pagination-button');
         if (i === currentPage) {
-            pageItem.classList.add('active')
+            pageItem.classList.add('active');
         }
         pageItem.addEventListener('click', () => {
             currentPage = i;
@@ -65,26 +84,45 @@ function updatePaginationControls(totalPages) {
     }
 }
 
-
-
 async function deleteBook(bookId, bookElement) {
+    const token = localStorage.getItem('authToken');
+    if (!token) {
+        alert('Please log in to delete a book');
+        window.location.href = '/';
+        return;
+    }
+
     try {
         const response = await fetch(`/books/${bookId}`, {
-            method: 'DELETE'
-        })
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        });
         if (response.ok) {
             bookElement.remove();
-            alert('Book deleted successfully')
+            alert('Book deleted successfully');
         } else {
-            alert('Failed to delete book')
+            if (response.status === 401 || response.status === 403) {
+                alert('Session expired. Please log in again.');
+                localStorage.removeItem('authToken');
+                window.location.href = '/';
+            } else {
+                alert('Failed to delete book');
+            }
         }
-        document.querySelector(`.book-card[data-id="${bookId}"]`)
-
     } catch (error) {
         console.error('Error deleting book:', error);
     }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+    const token = localStorage.getItem('authToken');
+    if (!token) {
+        alert('Please log in to view this page');
+        window.location.href = '/';
+        return;
+    }
     fetchBooks(currentPage);
 });

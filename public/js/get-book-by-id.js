@@ -3,13 +3,21 @@
 document.getElementById('get-book-form').addEventListener('submit', async (e) => {
     e.preventDefault();
 
+    const token = localStorage.getItem('authToken');
+    if (!token) {
+        alert('Please log in to add a book');
+        window.location.href = '/';
+        return;
+    }
+
     const bookID = document.getElementById('book-id').value;
 
     try {
         const response = await fetch(`/books/${bookID}`, {
             method: 'GET',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
             }
         })
 
@@ -19,11 +27,11 @@ document.getElementById('get-book-form').addEventListener('submit', async (e) =>
             const data = await response.json();
 
             // Update the form with the book details
-            document.getElementById('title').value = data.title;
-            document.getElementById('author').value = data.author;
-            document.getElementById('genre').value = data.genre;
-            document.getElementById('publicationYear').value = data.publicationYear;
-            document.getElementById('isbn').value = data.isbn;
+            document.getElementById('title').innerText = data.title;
+            document.getElementById('author').innerText = data.author;
+            document.getElementById('genre').innerText = data.genre;
+            document.getElementById('publicationYear').innerText = data.publicationYear;
+            document.getElementById('isbn').innerText = data.isbn;
 
             alert('Book retrieved Successfully')
         } else {

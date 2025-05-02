@@ -1,8 +1,8 @@
 const express = require('express');
-const login = express.Router(); // Create login route
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/schema').User; // Import User model
+const router = express.Router();
 
 // Secret key for JWT (import from .env)
 const JWT_SECRET = process.env.JWT_SECRET || 'YOUR SECRET KEY'
@@ -35,16 +35,11 @@ router.post('/', async (req, res) => {
 
         res.json({ token });
 
-        res.redirect('/home');
-
     } catch (err) {
         console.error(err);
         res.status(500).json({ error: 'Internal Server Error' }) // status code 500 is for internal server error
     }
 });
 
-router.get('/', async (req, res) => {
-    res.sendFile(path.join(__dirname, '..', 'public', 'html', 'login.html'));
-})
 
-module.exports = login;
+module.exports = router;

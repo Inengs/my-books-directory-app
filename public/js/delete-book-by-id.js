@@ -4,11 +4,19 @@ document.getElementById('delete-book-form').addEventListener('submit', async (e)
 
     const bookID = document.getElementById('book-id').value
 
+    const token = localStorage.getItem('authToken');
+    if (!token) {
+        alert('Please log in to delete a book');
+        window.location.href = '/';
+        return;
+    }
+
     try {
         const response = await fetch(`/books/${bookID}`, {
             method: 'DELETE',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
             }
         })
 

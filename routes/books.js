@@ -10,14 +10,14 @@ router.post('/', async (req, res) => {
         const savedBook = await newBook.save(); //save the new book to the database
         res.status(201).json(savedBook) // respond with a success message
     } catch (err) {
-        res.status(400).json({ error: " failed to add the book" }) // respond with an error message
+        res.status(400).json({ error: " failed to add the book", details: err.message }) // respond with an error message
     }
 })
 
 
 router
     .route("/:id")
-    //get a book by id
+    //get a book by i
     .get(async (req, res) => {
         try {
             const requiredBook = await Book.findById(req.params.id)

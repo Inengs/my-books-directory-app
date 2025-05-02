@@ -3,13 +3,21 @@
 document.getElementById('update-book-form').addEventListener('submit', async (e) => {
     e.preventDefault();
 
+    const token = localStorage.getItem('authToken');
+    if (!token) {
+        alert('Please log in to add a book');
+        window.location.href = '/';
+        return;
+    }
+
     const bookID = document.getElementById('book-id').value;
 
     try {
         const response = await fetch(`/books/${bookID}`, {
             method: 'PUT',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
             },
             body: JSON.stringify({
                 title: document.getElementById('title').value,
@@ -21,16 +29,17 @@ document.getElementById('update-book-form').addEventListener('submit', async (e)
 
         })
 
-        // Check if the response is OK
         if (response.ok) {
-            // Parse the response JSON
             const data = await response.json();
-
-            alert('Book updated Successfully')
-
-            // Handle success
-            console.log('Book updated successfully', data)
-
+            alert('Book updated Successfully');
+            document.getElementById('update-book-form').reset();
+            document.getElementById('bookDetails').innerHTML = `
+                <p>Title: ${data.title}</p>
+                <p>Author: ${data.author}</p>
+                <p>Genre: ${data.genre}</p>
+                <p>Publication Year: ${data.publicationYear}</p>
+                <p>ISBN: ${data.isbn}</p>
+            `;
         } else {
             alert('Failed to update book')
         }

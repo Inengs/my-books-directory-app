@@ -5,9 +5,9 @@ document.getElementById('login-form').addEventListener('submit', async (event) =
     const password = document.getElementById('password').value
 
     try {
-        const response = await fetch('login', {
+        const response = await fetch('/login', {
             method: 'POST',
-            header: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ username, password })
         });
 
