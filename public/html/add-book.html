@@ -9,10 +9,21 @@
 </head>
 
 <body>
+    <nav>
+        <ul class="nav-list">
+            <li><a href="/home" class="nav-link">Home</a></li>
+            <li><a href="/get-book-by-id" class="nav-link">Get Book</a></li>
+            <li><a href="/add-book" class="nav-link">Add Book</a></li>
+            <li><a href="/delete-book-by-id" class="nav-link">Delete Book</a></li>
+            <li><a href="/update-book" class="nav-link">Update Book</a></li>
+            <li><button id="logout-button" class="nav-button">Logout</button></li>
+        </ul>
+    </nav>
+
     <section id="Book-Add" class="Book-Add">
         <div class="Book-Add-form">
             <h1>ADD A NEW BOOK</h1>
-            <form id="add-book-form" method="post">
+            <form id="add-book-form" aria-labelledby="add-book-title" method="post">
                 <fieldset>
                     <legend>Book</legend>
                     <label>Title:</label><br>
@@ -33,7 +44,7 @@
                     <br>
                 </fieldset>
                 <br>
-                <button id="Submit">Add Book</button>
+                <button type="submit" aria-label="Add Book" id="Submit">Add Book</button>
             </form>
         </div>
 
@@ -42,6 +53,7 @@
 
     </section>
 
+    <script src="/js/utils.js"></script>
     <script src="/js/add-book.js"></script>
 </body>
 

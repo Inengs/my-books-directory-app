@@ -9,10 +9,21 @@
 </head>
 
 <body>
+    <nav>
+        <ul class="nav-list">
+            <li><a href="/home" class="nav-link">Home</a></li>
+            <li><a href="/get-book-by-id" class="nav-link">Get Book</a></li>
+            <li><a href="/add-book" class="nav-link">Add Book</a></li>
+            <li><a href="/delete-book-by-id" class="nav-link">Delete Book</a></li>
+            <li><a href="/update-book" class="nav-link">Update Book</a></li>
+            <li><button id="logout-button" class="nav-button">Logout</button></li>
+        </ul>
+    </nav>
+
     <section id="Book-delete" class="Book-delete">
-        <div class="Book-delete-form">
+        <div class="Book-delete-form" aria-labelledby="add-book-title">
             <h1>DELETE BOOK BY ID</h1>
-            <form id="delete-book-form" action="/books" method="post">
+            <form id="delete-book-form">
                 <input type="hidden" name="_method" value="DELETE">
                 <fieldset>
                     <legend>Book</legend>
@@ -22,11 +33,13 @@
                     <br>
                 </fieldset>
                 <br>
-                <button type="Submit" id="delete-button">Delete Book</button>
+                <button type="Submit" id="delete-button" aria-label="Delete Book">Delete Book</button>
             </form>
         </div>
+
     </section>
 
+    <script src="/js/utils.js"></script>
     <script src="/js/delete-book-by-id.js"></script>
 </body>
 

@@ -6,7 +6,9 @@ const bookSchema = new mongoose.Schema({
     author: { type: String, required: true },
     genre: { type: String, required: true },
     publicationYear: { type: Number, required: true },
-    isbn: { type: String, required: true },
+    isbn: {
+        type: String, required: true, match: /^(?:ISBN(?:-1[03])?:?\ )?(?=[-0-9X ]{10,17}$)(?:97[89][- ]?)?[0-9]{1,5}[- ]?[0-9]+[- ]?[0-9]+[- ]?[0-9X]$/
+    },
 })
 
 // Define the User Schema

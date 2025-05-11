@@ -1,11 +1,32 @@
 // GET A BOOK BY ID USING THE GET BOOK FORM
 
+document.addEventListener('DOMContentLoaded', () => {
+    const token = localStorage.getItem('authToken');
+    if (!token) {
+        alert('Please log in to access this page');
+        window.location.href = '/';
+        return;
+    }
+});
+
 document.getElementById('get-book-form').addEventListener('submit', async (e) => {
     e.preventDefault();
+
+    const submitButton = e.target.querySelector('button[type="submit"]');
+    submitButton.disabled = true;
+    submitButton.innerHTML = '<span class="loading"></span> Retrieving...';
 
     const token = localStorage.getItem('authToken');
     if (!token) {
         alert('Please log in to add a book');
+        window.location.href = '/';
+        return;
+    }
+
+    const isTokenValid = await window.validateToken(token); // From utils.js
+    if (!isTokenValid) {
+        alert('Session expired. Please log in again.');
+        localStorage.removeItem('authToken');
         window.location.href = '/';
         return;
     }
@@ -27,21 +48,33 @@ document.getElementById('get-book-form').addEventListener('submit', async (e) =>
             const data = await response.json();
 
             // Update the form with the book details
-            document.getElementById('title').innerText = data.title;
-            document.getElementById('author').innerText = data.author;
-            document.getElementById('genre').innerText = data.genre;
-            document.getElementById('publicationYear').innerText = data.publicationYear;
-            document.getElementById('isbn').innerText = data.isbn;
+            document.getElementById('bookDetails').innerHTML = `
+            <p><strong>Title:</strong> ${data.title}</p>
+            <p><strong>Author:</strong> ${data.author}</p>
+            <p><strong>Genre:</strong> ${data.genre}</p>
+            <p><strong>Publication Year:</strong> ${data.publicationYear}</p>
+            <p><strong>ISBN:</strong> ${data.isbn}</p>
+        `;
 
             alert('Book retrieved Successfully')
         } else {
-            alert('Failed to retrieve book')
+            if (response.status === 401 || response.status === 403) {
+                alert('Session expired. Please log in again.');
+                localStorage.removeItem('authToken');
+                window.location.href = '/';
+            } else {
+                const errorData = await response.json();
+                alert(`Failed to get book: ${errorData.error || 'Unknown error'}`);
+            }
         }
 
-        // Handle success
-        console.log('Book retrieved successfully', data)
     } catch (error) {
         console.error('Error retrieving book:', error)
+        alert('An error occurred while getting the book. Please try again.');
     }
 
+    submitButton.disabled = false;
+    submitButton.innerHTML = 'Add Book';
 })
+
+document.getElementById('logout-button')?.addEventListener('click', window.logout); // From utils.js

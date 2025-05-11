@@ -9,10 +9,21 @@
 </head>
 
 <body>
+    <nav>
+        <ul class="nav-list">
+            <li><a href="/home" class="nav-link">Home</a></li>
+            <li><a href="/get-book-by-id" class="nav-link">Get Book</a></li>
+            <li><a href="/add-book" class="nav-link">Add Book</a></li>
+            <li><a href="/delete-book-by-id" class="nav-link">Delete Book</a></li>
+            <li><a href="/update-book" class="nav-link">Update Book</a></li>
+            <li><button id="logout-button" class="nav-button">Logout</button></li>
+        </ul>
+    </nav>
+
     <section id="Book-get" class="Book-get">
         <div class="Book-Get-form">
             <h1>GET BOOK BY ID</h1>
-            <form id="get-book-form" action="/books" method="get">
+            <form id="get-book-form" aria-labelledby="get-book-title">
                 <fieldset>
                     <legend>Book</legend>
                     <label for="book-id">Book-id:</label><br>
@@ -20,13 +31,13 @@
                     <br>
                 </fieldset>
                 <br>
-                <button id="Submit">Get Book</button>
+                <button id="Submit" aria-label="Get Book">Get Book</button>
             </form>
         </div>
 
         <h3>Book Details</h3>
         <div id="bookDetails">
-            <label>Title:</label>
+            <!-- <label>Title:</label>
             <p id="title"></p>
 
             <label>Author:</label>
@@ -39,14 +50,13 @@
             <p id="publicationYear"></p>
 
             <label>ISBN:</label>
-            <p id="isbn"></p>
+            <p id="isbn"></p> -->
         </div>
-
-
-
     </section>
 
+    <script src="/js/utils.js"></script>
     <script src="/js/get-book-by-id.js"></script>
+
 </body>
 
 </html>

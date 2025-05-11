@@ -9,10 +9,21 @@
 </head>
 
 <body>
+    <nav>
+        <ul class="nav-list">
+            <li><a href="/home" class="nav-link">Home</a></li>
+            <li><a href="/get-book-by-id" class="nav-link">Get Book</a></li>
+            <li><a href="/add-book" class="nav-link">Add Book</a></li>
+            <li><a href="/delete-book-by-id" class="nav-link">Delete Book</a></li>
+            <li><a href="/update-book" class="nav-link">Update Book</a></li>
+            <li><button id="logout-button" class="nav-button">Logout</button></li>
+        </ul>
+    </nav>
+
     <section id="Book-Update" class="Book-Update">
         <div class="Book-Update-form">
             <h1>UPDATE BOOK DETAILS</h1>
-            <form id="update-book-form" method="post">
+            <form id="update-book-form" method="post" aria-labelledby="update-book-title">
                 <input type="hidden" name="_method" value="PUT">
                 <fieldset>
                     <legend>Book</legend>
@@ -36,15 +47,17 @@
                     <br>
                 </fieldset>
                 <br>
-                <button type="submit" id="submit">Update Book</button>
+                <button type="submit" id="update-book" aria-label="Add Book">Update Book</button>
             </form>
         </div>
 
         <h3>Book Details</h3>
         <div id="bookDetails"></div>
 
+
     </section>
 
+    <script src="/js/utils.js"></script>
     <script src="/js/update-book.js"></script>
 </body>
 

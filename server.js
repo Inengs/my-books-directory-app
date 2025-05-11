@@ -7,11 +7,13 @@ const methodOverride = require('method-override')
 const path = require('path');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
-const dotenv = require('dotenv').config();
+const dotenv = require('dotenv')
 const loginRouter = require('./routes/login');
 const registerRouter = require('./routes/register');
 
 
+dotenv.config();
+console.log('MONGO_URI:', process.env.MONGO_URI);
 // initialize app
 const app = express();
 
@@ -31,8 +33,14 @@ app.use(express.json())
 const JWT_SECRET = process.env.JWT_SECRET || 'YOUR_DEFAULT_SECRET_KEY';
 const port = process.env.PORT || 3000; // initialize port
 
+const mongoURI = process.env.MONGO_URI;
+if (!mongoURI) {
+    console.error('Error: MONGO_URI is not defined in .env file');
+    process.exit(1);
+}
+
 // connect to mongoDB
-mongoose.connect('mongodb://localhost:27017/booksDirectory')
+mongoose.connect(mongoURI)
     .then(() => console.log('Connected to MongoDB'))
     .catch(err => {
         console.error('Could not connect to MongoDB', err);
@@ -94,17 +102,15 @@ app.get('/add-book', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'html', 'add-book.html'));
 });
 
+// Route to delete a book
+app.get('/delete-book/:id', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'html', 'delete-book-by-id.html'));
+});
 
-// // Route to delete a book
-// app.get('/delete-book/:id', (req, res) => {
-//     res.sendFile(path.join(__dirname, 'public', 'html', 'delete-book-by-id.html'));
-// });
-
-// // Route to get a book by ID
-// app.get('/get-book/:id', (req, res) => {
-//     res.sendFile(path.join(__dirname, 'public', 'html', 'get-book-by-id.html'));
-// });
-
+// Route to get a book by ID
+app.get('/get-book/:id', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'html', 'get-book-by-id.html'));
+});
 
 
 //start Server
