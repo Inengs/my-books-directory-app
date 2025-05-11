@@ -3,6 +3,28 @@ const router = express.Router()
 const Book = require('../models/schema').Book;
 
 
+// get all books
+router.get('/', async (req, res) => {
+    const { page = 1, limit = 20 } = req.query; // Default to page 1, 20 books per page
+
+    try {
+        const books = await Book.find()
+            .skip((page - 1) * limit)
+            .limit(parseInt(limit));
+        const totalBooks = await Book.countDocuments();
+
+        res.json({
+            books,
+            totalBooks,
+            totalPages: Math.ceil(totalBooks / limit),
+            currentPage: parseInt(page),
+        });
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to fetch books' });
+    }
+});
+
+
 // Add a new book
 router.post('/', async (req, res) => {
     try {
@@ -17,7 +39,7 @@ router.post('/', async (req, res) => {
 
 router
     .route("/:id")
-    //get a book by i
+    //get a book by id
     .get(async (req, res) => {
         try {
             const requiredBook = await Book.findById(req.params.id)
@@ -59,25 +81,6 @@ router
     })
 
 
-// get all books
-router.get('/', async (req, res) => {
-    const { page = 1, limit = 20 } = req.query; // Default to page 1, 20 books per page
 
-    try {
-        const books = await Book.find()
-            .skip((page - 1) * limit)
-            .limit(parseInt(limit));
-        const totalBooks = await Book.countDocuments();
-
-        res.json({
-            books,
-            totalBooks,
-            totalPages: Math.ceil(totalBooks / limit),
-            currentPage: parseInt(page),
-        });
-    } catch (error) {
-        res.status(500).json({ error: 'Failed to fetch books' });
-    }
-});
 
 module.exports = router;

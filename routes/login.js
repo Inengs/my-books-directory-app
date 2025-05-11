@@ -3,9 +3,13 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/schema').User; // Import User model
 const router = express.Router();
+const dotenv = require('dotenv');
+
+dotenv.config()
 
 // Secret key for JWT (import from .env)
-const JWT_SECRET = process.env.JWT_SECRET || 'YOUR SECRET KEY'
+const JWT_SECRET = process.env.JWT_SECRET || 'YOUR_DEFAULT_SECRET_KEY'
+console.log('JWT_SECRET in login.js:', JWT_SECRET);
 
 router.post('/', async (req, res) => {
     const { username, password } = req.body;

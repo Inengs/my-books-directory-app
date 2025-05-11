@@ -38,6 +38,8 @@ document.getElementById('add-book-form').addEventListener('submit', async (e) =>
     const isbn = document.getElementById('isbn').value;
     if (!/^\d{10}|\d{13}$/.test(isbn)) {
         alert('ISBN must be 10 or 13 digits');
+        submitButton.disabled = false;
+        submitButton.innerHTML = 'Add Book';
         return;
     }
 

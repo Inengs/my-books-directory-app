@@ -8,14 +8,17 @@ async function fetchBooks(page = 1) {
     booksList.innerHTML = '<div class="loading"></div>';
 
     const token = localStorage.getItem('authToken');
+    console.log('Token in fetchBooks:', token); // Log token
     if (!token) {
+        console.log('Invalid or missing token');
         alert('Please log in to view books');
         window.location.href = '/';
         return;
     }
 
     // Validate token before proceeding
-    const isTokenValid = await validateToken(token);
+    const isTokenValid = await window.validateToken(token);
+    console.log('Token validation result:', isTokenValid); // Log result
     if (!isTokenValid) {
         alert('Session expired. Please log in again.');
         localStorage.removeItem('authToken');

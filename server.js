@@ -31,6 +31,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json())
 
 const JWT_SECRET = process.env.JWT_SECRET || 'YOUR_DEFAULT_SECRET_KEY';
+console.log('JWT_SECRET in server.js:', JWT_SECRET);
 const port = process.env.PORT || 3000; // initialize port
 
 const mongoURI = process.env.MONGO_URI;
@@ -55,15 +56,20 @@ const hashPassword = async (password) => {
 
 function authenticateToken(req, res, next) {
     const token = req.headers['authorization']?.split(' ')[1]; // get the token from the request
+    console.log('Token received:', token);
+
     if (!token) {
+        console.log('No token provided');
         return res.status(401).json({ error: 'Access Denied' })
     }
 
     jwt.verify(token, JWT_SECRET, (err, user) => {
         if (err) {
+            console.log('Token verification error:', err.message);
             return res.status(403).json({ error: 'Invalid Token' })
         }
 
+        console.log('Token verified, user:', user);
         req.user = user; // save the user info for later use
         next(); // move to the next middleware or route
     })
@@ -103,12 +109,12 @@ app.get('/add-book', (req, res) => {
 });
 
 // Route to delete a book
-app.get('/delete-book/:id', (req, res) => {
+app.get('/delete-book', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'html', 'delete-book-by-id.html'));
 });
 
 // Route to get a book by ID
-app.get('/get-book/:id', (req, res) => {
+app.get('/get-book', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'html', 'get-book-by-id.html'));
 });
 

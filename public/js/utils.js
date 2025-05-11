@@ -8,6 +8,15 @@ async function validateToken(token) {
                 'Authorization': `Bearer ${token}`
             }
         });
+        console.log('Validate token response:', response.status, response.statusText);
+        if (response.status === 401) {
+            console.log('Unauthorized: No token or invalid token');
+            return false;
+        }
+        if (response.status === 403) {
+            console.log('Forbidden: Token verification failed');
+            return false;
+        }
         return response.ok;
     } catch (error) {
         console.error('Token validation error:', error);

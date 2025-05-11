@@ -74,7 +74,7 @@ document.getElementById('get-book-form').addEventListener('submit', async (e) =>
     }
 
     submitButton.disabled = false;
-    submitButton.innerHTML = 'Add Book';
+    submitButton.innerHTML = 'Get Book';
 })
 
 document.getElementById('logout-button')?.addEventListener('click', window.logout); // From utils.js
