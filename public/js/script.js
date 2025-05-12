@@ -51,6 +51,7 @@ async function fetchBooks(page = 1) {
 
                 bookItem.innerHTML = `
                     <h3>${book.title}</h3>
+                    <p><strong>ID:</strong> ${book._id}</p>
                     <p>Author: ${book.author}</p>
                     <p>Genre: ${book.genre}</p>
                     <p>Publication Year: ${book.publicationYear}</p>

@@ -53,18 +53,42 @@ router
     })
     // Update a book by id
     .put(async (req, res) => {
+        const { title, author, genre, publicationYear, isbn } = req.body;
+
+        // Validate inputs
+        if (!title || !author || !genre || !publicationYear || !isbn) {
+            return res.status(400).json({ error: 'All fields are required' });
+        }
+
+        if (!/^\d{10}(\d{3})?$/.test(isbn)) {
+            return res.status(400).json({ error: 'ISBN must be exactly 10 or 13 digits' });
+        }
+
         try {
-            const updatedBook = await Book.findByIdAndUpdate(req.params.id, req.body, {
-                new: true, // return the updated book
-                runValidators: true, // ensure the updated book passes the schema validation
-            })
+            const updatedBook = await Book.findByIdAndUpdate(
+                req.params.id,
+                { title, author, genre, publicationYear, isbn },
+                {
+                    new: true, // Return the updated book
+                    runValidators: true, // Run schema validators
+                }
+            );
+
             if (!updatedBook) {
-                return res.status(404).json({ error: 'Book not found' })
+                return res.status(404).json({ error: 'Book not found' });
             }
 
-            res.status(200).json(updatedBook); // send the updated book to the client
+            res.status(200).json(updatedBook);
         } catch (err) {
-            res.status(400).json({ error: 'failed to update book', details: err.message })
+            console.error('Error updating book:', err);
+            if (err.code === 11000) {
+                // Duplicate ISBN error
+                res.status(400).json({ error: 'ISBN already exists' });
+            } else if (err.name === 'CastError') {
+                res.status(400).json({ error: 'Invalid book ID format' });
+            } else {
+                res.status(400).json({ error: 'Failed to update book', details: err.message });
+            }
         }
     })
     // Delete a book by id

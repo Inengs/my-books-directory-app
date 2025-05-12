@@ -21,6 +21,8 @@ document.getElementById('update-book-form').addEventListener('submit', async (e)
     if (!token) {
         alert('Please log in to add a book');
         window.location.href = '/';
+        submitButton.disabled = false;
+        submitButton.innerHTML = 'Update Book';
         return;
     }
 
@@ -29,44 +31,57 @@ document.getElementById('update-book-form').addEventListener('submit', async (e)
         alert('Session expired. Please log in again.');
         localStorage.removeItem('authToken');
         window.location.href = '/';
+        submitButton.disabled = false;
+        submitButton.innerHTML = 'Update Book';
         return;
     }
 
     const isbn = document.getElementById('isbn').value;
-    if (!/^\d{10}|\d{13}$/.test(isbn)) {
-        alert('ISBN must be 10 or 13 digits');
+    if (!/^\d{10}(\d{3})?$/.test(isbn)) {
+        alert('ISBN must be exactly 10 or 13 digits');
+        submitButton.disabled = false;
+        submitButton.innerHTML = 'Update Book';
         return;
     }
 
     const bookID = document.getElementById('book-id').value;
+    const bookData = {
+        title: document.getElementById('title').value,
+        author: document.getElementById('author').value,
+        genre: document.getElementById('genre').value,
+        publicationYear: parseInt(document.getElementById('publicationYear').value),
+        isbn,
+    };
 
     try {
+        // Add timeout to prevent hanging
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 10000); // 10-second timeout
+
         const response = await fetch(`/books/${bookID}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
             },
-            body: JSON.stringify({
-                title: document.getElementById('title').value,
-                author: document.getElementById('author').value,
-                genre: document.getElementById('genre').value,
-                publicationYear: document.getElementById('publicationYear').value,
-                isbn: document.getElementById('isbn').value,
-            })
+            body: JSON.stringify(bookData),
+            signal: controller.signal,
 
-        })
+        });
 
+        clearTimeout(timeoutId); // Clear timeout if request completes
+
+        const data = await response.json();
         if (response.ok) {
-            const data = await response.json();
             alert('Book updated Successfully');
             document.getElementById('update-book-form').reset();
             document.getElementById('bookDetails').innerHTML = `
-                <p>Title: ${data.title}</p>
-                <p>Author: ${data.author}</p>
-                <p>Genre: ${data.genre}</p>
-                <p>Publication Year: ${data.publicationYear}</p>
-                <p>ISBN: ${data.isbn}</p>
+                <p><strong>Title:</strong> ${data.title}</p>
+                <p><strong>Author:</strong> ${data.author}</p>
+                <p><strong>Genre:</strong> ${data.genre}</p>
+                <p><strong>Publication Year:</strong> ${data.publicationYear}</p>
+                <p><strong>ISBN:</strong> ${data.isbn}</p>
+                <p><strong>ID:</strong> ${data._id}</p>
             `;
         } else {
             if (response.status === 401 || response.status === 403) {
@@ -82,10 +97,12 @@ document.getElementById('update-book-form').addEventListener('submit', async (e)
     } catch (error) {
         console.error('Error updating book:', error)
         alert('An error occurred while getting the book. Please try again.');
+    } finally {
+        submitButton.disabled = false;
+        submitButton.innerHTML = 'Update Book';
     }
 
-    submitButton.disabled = false;
-    submitButton.innerHTML = 'Update Book';
+
 })
 
 document.getElementById('logout-button')?.addEventListener('click', window.logout); // From utils.js

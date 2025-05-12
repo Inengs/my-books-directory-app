@@ -7,7 +7,7 @@ const bookSchema = new mongoose.Schema({
     genre: { type: String, required: true },
     publicationYear: { type: Number, required: true },
     isbn: {
-        type: String, required: true, match: /^(?:ISBN(?:-1[03])?:?\ )?(?=[-0-9X ]{10,17}$)(?:97[89][- ]?)?[0-9]{1,5}[- ]?[0-9]+[- ]?[0-9]+[- ]?[0-9X]$/
+        type: String, required: true, unique: true, match: /^\d{10}(\d{3})?$/
     },
 })
 

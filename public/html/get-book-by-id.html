@@ -26,32 +26,20 @@
             <form id="get-book-form" aria-labelledby="get-book-title">
                 <fieldset>
                     <legend>Book</legend>
-                    <label for="book-id">Book-id:</label><br>
-                    <input type="text" name="book-id" id="book-id" placeholder="Enter book ID" required>
+                    <label for="book-id">Select Book or Enter ID:</label><br>
+                    <select id="book-select" name="book-select">
+                        <option value="">-- Select a Book --</option>
+                    </select><br>
+                    <input type="text" name="book-id" id="book-id" placeholder="Or enter book ID" required>
                     <br>
                 </fieldset>
                 <br>
-                <button id="Submit" aria-label="Get Book">Get Book</button>
+                <button type="submit" id="submit" aria-label="Get Book">Get Book</button>
             </form>
         </div>
 
         <h3>Book Details</h3>
-        <div id="bookDetails">
-            <!-- <label>Title:</label>
-            <p id="title"></p>
-
-            <label>Author:</label>
-            <p id="author"></p>
-
-            <label>Genre:</label>
-            <p id="genre"></p>
-
-            <label>Publication Year:</label>
-            <p id="publicationYear"></p>
-
-            <label>ISBN:</label>
-            <p id="isbn"></p> -->
-        </div>
+        <div id="bookDetails"></div>
     </section>
 
     <script src="/js/utils.js"></script>
